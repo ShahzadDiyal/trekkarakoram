@@ -3,6 +3,7 @@ import { Container } from './Container';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';
 import { Button } from '../ui/Button';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   const instagramImages = [
@@ -43,12 +44,12 @@ export const Footer = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           <div className="space-y-8">
-            <a href="/" className="flex flex-col">
+            <Link to="/" className="flex flex-col">
               <span className="font-display font-bold text-2xl tracking-tighter">
                 PAKISTAN <span className="text-mountain-accent">TREK</span>
               </span>
               <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-white/30">ADVENTURES</span>
-            </a>
+            </Link>
             <div className="space-y-4">
               <div className="flex items-start space-x-3 text-white/50 group cursor-pointer hover:text-white transition-colors">
                 <MapPin size={18} className="text-mountain-accent mt-1 shrink-0" />
@@ -70,9 +71,9 @@ export const Footer = () => {
             <ul className="grid grid-cols-1 gap-4">
               {NAV_LINKS.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-white/40 hover:text-mountain-accent hover:translate-x-1 inline-block transition-all text-sm font-medium">
+                  <Link to={link.href} className="text-white/40 hover:text-mountain-accent hover:translate-x-1 inline-block transition-all text-sm font-medium">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

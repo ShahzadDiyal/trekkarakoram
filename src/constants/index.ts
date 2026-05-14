@@ -2,8 +2,8 @@ export const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'Destinations', href: '/destinations' },
   { name: 'Expeditions', href: '/treks/k2-base-camp-gondogoro-la' },
-  { name: 'About', href: '#' },
-  { name: 'Contact', href: '#' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export const DESTINATIONS = [

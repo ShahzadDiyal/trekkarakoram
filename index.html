@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pakistan Trekking Adventures</title>
     <script>
-      // Early fix for "Cannot set property fetch of #<Window> which has only a getter"
+      // Global fix for "Cannot set property fetch of #<Window> which has only a getter"
+      // Many libraries try to polyfill fetch by assignment. In this environment, we must make it writable first.
       (function() {
         try {
-          var originalFetch = window.fetch;
-          if (originalFetch) {
+          var proxyFetch = window.fetch;
+          if (proxyFetch) {
             Object.defineProperty(window, 'fetch', {
-              value: originalFetch,
+              value: proxyFetch,
               writable: true,
               configurable: true,
               enumerable: true
             });
           }
         } catch (e) {
-          // Ignore errors if defineProperty fails
+          console.warn('Failed to patch fetch for writability:', e);
         }
       })();
     </script>

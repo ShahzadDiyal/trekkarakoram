@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Sun, Moon } from 'lucide-react';
+import { Menu, X, Phone, Sun, Moon, User as UserIcon, LogOut } from 'lucide-react';
 import { Container } from './Container';
+import { Button } from '../ui/Button';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';
 import { Link, useLocation } from 'react-router-dom';
+import { auth } from '../../lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +24,11 @@ export const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setUserDropdownOpen(false);
+  };
 
   return (
     <nav
@@ -85,6 +96,57 @@ export const Navbar = () => {
             {isDark ? <Moon size={20} /> : <Sun size={20} />}
           </button>
           
+          {user ? (
+            <div className="relative">
+              <button 
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="flex items-center space-x-3 glass px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors"
+              >
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt={user.displayName || ''} className="w-8 h-8 rounded-full border border-white/20" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-mountain-accent/20 flex items-center justify-center border border-white/10">
+                    <UserIcon size={16} className="text-mountain-accent" />
+                  </div>
+                )}
+                <span className="text-sm font-medium text-white/80">{user.displayName || 'Explorer'}</span>
+              </button>
+
+              <AnimatePresence>
+                {userDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute right-0 mt-4 w-56 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl py-2"
+                  >
+                    <div className="px-4 py-2 border-b border-white/5 mb-2">
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-widest">Signed in as</p>
+                       <p className="text-sm font-medium text-white line-clamp-1">{user.email}</p>
+                    </div>
+                    <Link to="/favorite-treks" className="flex items-center px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                      <Phone size={14} className="mr-3 text-mountain-accent" />
+                      My Favorites
+                    </Link>
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/5 transition-colors"
+                    >
+                      <LogOut size={14} className="mr-3" />
+                      Logout
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" className="px-6 py-2 rounded-full border-white/10 text-white/80 hover:bg-white/5">
+                Login
+              </Button>
+            </Link>
+          )}
+
           <motion.a
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -137,7 +199,37 @@ export const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+              
               <hr className="border-white/10" />
+              
+              {user ? (
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3 p-3 bg-white/5 rounded-2xl">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName || ''} className="w-10 h-10 rounded-full" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-mountain-accent/20 flex items-center justify-center">
+                        <UserIcon size={20} className="text-mountain-accent" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-white font-bold">{user.displayName || 'Explorer'}</p>
+                      <p className="text-white/40 text-xs">{user.email}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={handleLogout}
+                    className="w-full py-4 text-red-400 font-bold border border-red-400/20 rounded-2xl hover:bg-red-400/5"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full py-5 rounded-2xl">Login / Sign Up</Button>
+                </Link>
+              )}
+
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 className="w-full flex items-center justify-center space-x-3 bg-mountain-accent text-white py-5 rounded-2xl font-bold text-lg"
@@ -153,3 +245,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+
