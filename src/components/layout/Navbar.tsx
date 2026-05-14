@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Sun, Moon, User as UserIcon, LogOut } from 'lucide-react';
+import { Menu, X, Phone, Sun, Moon, User as UserIcon, LogOut, LayoutDashboard, Heart } from 'lucide-react';
 import { Container } from './Container';
 import { Button } from '../ui/Button';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';
@@ -120,12 +120,12 @@ export const Navbar = () => {
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     className="absolute right-0 mt-4 w-56 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl py-2"
                   >
-                    <div className="px-4 py-2 border-b border-white/5 mb-2">
-                       <p className="text-xs text-white/40 font-bold uppercase tracking-widest">Signed in as</p>
-                       <p className="text-sm font-medium text-white line-clamp-1">{user.email}</p>
-                    </div>
-                    <Link to="/favorite-treks" className="flex items-center px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
-                      <Phone size={14} className="mr-3 text-mountain-accent" />
+                    <Link to="/dashboard" className="flex items-center px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                      <LayoutDashboard size={14} className="mr-3 text-mountain-accent" />
+                      Dashboard
+                    </Link>
+                    <Link to="/dashboard/favorites" className="flex items-center px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                      <Heart size={14} className="mr-3 text-mountain-accent" />
                       My Favorites
                     </Link>
                     <button 

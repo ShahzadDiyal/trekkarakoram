@@ -1,22 +1,47 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Container } from '../components/layout/Container';
 import { Button } from '../components/ui/Button';
 import { 
   Clock, MapPin, Wind, Star, Check, HelpCircle, 
   ChevronRight, ArrowLeft, Calendar, User, Mountain, 
-  MessageSquare, Shield, Activity
+  MessageSquare, Shield, Activity, Loader2
 } from 'lucide-react';
 import { treks } from '../data/treks';
 import { WHATSAPP_NUMBER } from '../constants';
+import { useAuth } from '../hooks/useAuth';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export const TrekDetails = () => {
   const { slug } = useParams();
-  const trek = treks.find(t => t.slug === slug) || treks[0];
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollY } = useScroll();
+  const { user } = useAuth();
+  const [isInquiring, setIsInquiring] = useState(false);
+  const [inquirySent, setInquirySent] = useState(false);
+
+  const handleInquiry = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    
+    setIsInquiring(true);
+    try {
+      await addDoc(collection(db, 'inquiries'), {
+        userId: user.uid,
+        trekId: trek.slug,
+        trekTitle: trek.title,
+        status: 'pending',
+        createdAt: serverTimestamp()
+      });
+      setInquirySent(true);
+    } catch (error) {
+      console.error('Error sending inquiry:', error);
+    } finally {
+      setIsInquiring(false);
+    }
+  };
   const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 600], [1, 1.2]);
 
@@ -205,8 +230,13 @@ export const TrekDetails = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <Button className="w-full py-6 rounded-2xl font-bold shadow-xl shadow-mountain-accent/20">
-                    Reserve My Spot
+                  <Button 
+                    disabled={isInquiring || inquirySent}
+                    onClick={handleInquiry}
+                    className={`w-full py-6 rounded-2xl font-bold shadow-xl ${inquirySent ? 'bg-emerald-500 hover:bg-emerald-600' : 'shadow-mountain-accent/20'}`}
+                  >
+                    {isInquiring ? <Loader2 className="animate-spin mr-2" /> : null}
+                    {inquirySent ? 'Inquiry Sent!' : 'Reserve My Spot'}
                   </Button>
                   <a 
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi, I am interested in the ${trek.title} expedition.`}
