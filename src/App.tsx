@@ -1,27 +1,31 @@
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { MainLayout } from './components/layout/MainLayout';
-import { Hero } from './components/home/Hero';
-import { FeaturedDestinations } from './components/home/FeaturedDestinations';
-import { TrekPackages } from './components/home/TrekPackages';
-import { WhyChooseUs } from './components/home/WhyChooseUs';
-import { AdventureStats } from './components/home/AdventureStats';
-import { Testimonials } from './components/home/Testimonials';
-import { Gallery } from './components/home/Gallery';
-import { SafetyInfo } from './components/home/SafetyInfo';
-import { CTABanner } from './components/home/CTABanner';
+import { Home } from './pages/Home';
+import { Destinations } from './pages/Destinations';
+import { TrekDetails } from './pages/TrekDetails';
+
+// Scroll to top on route change
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 export default function App() {
   return (
-    <MainLayout>
-      <Hero />
-      <FeaturedDestinations />
-      <TrekPackages />
-      <WhyChooseUs />
-      <AdventureStats />
-      <Testimonials />
-      <Gallery />
-      <SafetyInfo />
-      <CTABanner />
-    </MainLayout>
+    <Router>
+      <ScrollToTop />
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/destinations" element={<Destinations />} />
+          <Route path="/treks/:slug" element={<TrekDetails />} />
+        </Routes>
+      </MainLayout>
+    </Router>
   );
 }
 

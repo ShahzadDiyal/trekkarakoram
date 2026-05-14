@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
 import { Button } from '../ui/Button';
 import { Clock, User, ArrowUpRight, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const treks = [
   {
@@ -10,7 +11,8 @@ const treks = [
     difficulty: "Challenging",
     price: "$4,800",
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1549114227-3006bbd92361?auto=format&fit=crop&q=80&w=1470"
+    image: "https://images.unsplash.com/photo-1549114227-3006bbd92361?auto=format&fit=crop&q=80&w=1470",
+    slug: "k2-base-camp-gondogoro-la"
   },
   {
     title: "Nanga Parbat Base Camp",
@@ -18,7 +20,8 @@ const treks = [
     difficulty: "Moderate",
     price: "$2,200",
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1470"
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1470",
+    slug: "nanga-parbat-base-camp"
   },
   {
     title: "Karakoram Highway Luxury Tour",
@@ -26,7 +29,8 @@ const treks = [
     difficulty: "Easy",
     price: "$3,500",
     rating: 5.0,
-    image: "https://images.unsplash.com/photo-1589308454676-474020a59e19?auto=format&fit=crop&q=80&w=1470"
+    image: "https://images.unsplash.com/photo-1589308454676-474020a59e19?auto=format&fit=crop&q=80&w=1470",
+    slug: "karakoram-highway-luxury-tour"
   }
 ];
 
@@ -98,7 +102,7 @@ export const TrekPackages = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl font-display font-bold text-white mb-6 leading-tight group-hover:text-mountain-accent transition-colors">
+                <h3 className="text-2xl font-display font-bold text-white mb-6 leading-tight group-hover:text-mountain-accent transition-colors h-[3.5rem] line-clamp-2">
                   {trek.title}
                 </h3>
 
@@ -107,9 +111,11 @@ export const TrekPackages = () => {
                     <span className="block text-[10px] uppercase tracking-tighter text-white/40 leading-none mb-1">Starting from</span>
                     <span className="text-2xl font-bold text-white tracking-tight">{trek.price}</span>
                   </div>
-                  <Button size="sm" variant="ghost" className="round-full w-12 h-12 p-0 bg-white/5 hover:bg-mountain-accent hover:text-mountain-950 transition-all duration-300">
-                    <ArrowUpRight size={20} />
-                  </Button>
+                  <Link to={`/treks/${trek.slug}`}>
+                    <Button size="sm" variant="ghost" className="round-full w-12 h-12 p-0 bg-white/5 hover:bg-mountain-accent hover:text-mountain-950 transition-all duration-300">
+                      <ArrowUpRight size={20} />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -117,9 +123,11 @@ export const TrekPackages = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <Button variant="outline" className="px-12 py-6 rounded-full border-white/10 hover:border-mountain-accent text-white/80">
-            Discover All Expeditions
-          </Button>
+          <Link to="/destinations">
+            <Button variant="outline" className="px-12 py-6 rounded-full border-white/10 hover:border-mountain-accent text-white/80">
+              Discover All Expeditions
+            </Button>
+          </Link>
         </div>
       </Container>
     </section>

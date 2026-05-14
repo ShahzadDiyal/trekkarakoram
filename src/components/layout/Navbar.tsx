@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Sun, Moon } from 'lucide-react';
 import { Container } from './Container';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,43 +26,54 @@ export const Navbar = () => {
       }`}
     >
       <Container className="flex items-center justify-between">
-        <motion.a 
-          href="/" 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <Link 
+          to="/" 
           className="group flex items-center space-x-3"
         >
-          <div className="relative w-10 h-10">
-            <div className="absolute inset-0 bg-mountain-accent rounded-xl rotate-45 group-hover:rotate-90 transition-transform duration-500" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xl font-bold text-white">P</span>
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center space-x-3"
+          >
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 bg-mountain-accent rounded-xl rotate-45 group-hover:rotate-90 transition-transform duration-500" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-xl font-bold text-white">P</span>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-bold text-lg tracking-tighter leading-none">
-              PAKISTAN <span className="text-mountain-accent">TREK</span>
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-white/40 mt-1">ADVENTURES</span>
-          </div>
-        </motion.a>
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-lg tracking-tighter leading-none">
+                PAKISTAN <span className="text-mountain-accent">TREK</span>
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-white/40 mt-1">ADVENTURES</span>
+            </div>
+          </motion.div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-1">
           {NAV_LINKS.map((link, i) => (
-            <motion.a
+            <motion.div
               key={link.name}
-              href={link.href}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white transition-all relative group"
             >
-              <span className="relative z-10">{link.name}</span>
-              <motion.span 
-                className="absolute inset-0 bg-white/5 rounded-lg scale-0 group-hover:scale-100 transition-transform"
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              />
-            </motion.a>
+              <Link
+                to={link.href}
+                className={`px-4 py-2 text-sm font-medium transition-all relative group ${
+                  location.pathname === link.href ? 'text-mountain-accent' : 'text-white/60 hover:text-white'
+                }`}
+              >
+                <span className="relative z-10">{link.name}</span>
+                <motion.span 
+                  className={`absolute inset-0 bg-white/5 rounded-lg transition-transform ${
+                    location.pathname === link.href ? 'scale-100' : 'scale-0 group-hover:scale-100'
+                  }`}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                />
+              </Link>
+            </motion.div>
           ))}
         </div>
 
@@ -113,14 +126,16 @@ export const Navbar = () => {
           >
             <div className="p-6 space-y-4">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  className="block text-2xl font-display font-medium text-white/70 hover:text-white transition-colors"
+                  to={link.href}
+                  className={`block text-2xl font-display font-medium transition-colors ${
+                    location.pathname === link.href ? 'text-mountain-accent' : 'text-white/70 hover:text-white'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <hr className="border-white/10" />
               <a
