@@ -12,10 +12,23 @@ import { useAuth } from '../../hooks/useAuth';
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark') || true;
+    }
+    return true;
+  });
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
 
   useEffect(() => {
     const handleScroll = () => {

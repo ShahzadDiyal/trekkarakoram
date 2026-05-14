@@ -21,7 +21,8 @@ export const Hero = () => {
     <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Cinematic Background Video */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-mountain-950/40 via-mountain-950/60 to-mountain-950 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-mountain-950/60 via-mountain-950/70 to-mountain-950 z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(6,12,18,0.4)_100%)] z-10" />
         <motion.div style={{ y: y1 }} className="h-full w-full">
           <video
             autoPlay
@@ -41,14 +42,14 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-8"
+            className="mb-10"
           >
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass border border-white/10 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-center space-x-3 px-5 py-2.5 rounded-full glass border border-white/10 backdrop-blur-md shadow-2xl">
+              <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mountain-accent opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-mountain-accent"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-mountain-accent"></span>
               </span>
-              <span className="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-white/80">
+              <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-white/90">
                 Bookings Open for Summer 2026
               </span>
             </div>
@@ -58,20 +59,20 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 text-gradient max-w-5xl"
+            className="text-6xl md:text-[9rem] font-display font-bold leading-[0.95] mb-10 text-white drop-shadow-2xl max-w-6xl tracking-tighter"
           >
-            Explore The <span className="italic font-serif font-light text-white">Untouched</span> <br />
-            Beauty of Pakistan
+            Explore The <br />
+            <span className="italic font-serif font-light text-mountain-accent">Untouched</span> Beauty
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="max-w-2xl text-lg md:text-xl text-white/70 mb-12 font-light leading-relaxed"
+            className="max-w-xl text-lg md:text-2xl text-white/60 mb-14 font-light leading-relaxed tracking-wide"
           >
-            Luxury trekking adventures in Skardu, Hunza, Karakoram & beyond. 
-            Experience the world's highest peaks with premium hospitality.
+            Premium expeditions in Skardu, Hunza & Karakoram.
+            Elevate your journey with elite mountain guides.
           </motion.p>
 
           <motion.div
