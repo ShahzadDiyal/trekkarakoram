@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-mountain-950: #0a0a0a;
+  --color-mountain-900: #121212;
+  --color-mountain-800: #1e1e1e;
+  --color-mountain-700: #2d2d2d;
+  --color-mountain-accent: #f27d26; /* Warm sunset orange */
+  --color-mountain-glass: rgba(255, 255, 255, 0.05);
+  --color-mountain-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-mountain-950 text-white font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+.glass {
+  @apply bg-mountain-glass backdrop-blur-xl border border-mountain-glass-border;
+}
+
+.cinematic-shadow {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/60;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-mountain-950;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-mountain-700 rounded-full hover:bg-mountain-accent transition-colors;
+}

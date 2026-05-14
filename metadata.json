@@ -1,0 +1,8 @@
+{
+  "name": "Pakistan Trekking Adventures",
+  "description": "Premium trekking and tourism platform for exploring Pakistan's majestic mountain ranges including K2, Hunza, and Skardu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
