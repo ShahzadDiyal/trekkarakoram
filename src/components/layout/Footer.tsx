@@ -2,6 +2,7 @@ import { Instagram, Facebook, Twitter, Mail, Send, MapPin, Phone } from 'lucide-
 import { Container } from './Container';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';
 import { Button } from '../ui/Button';
+import { motion } from 'framer-motion';
 
 export const Footer = () => {
   const instagramImages = [

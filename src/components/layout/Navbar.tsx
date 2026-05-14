@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Sun, Moon } from 'lucide-react';
 import { Container } from './Container';
 import { NAV_LINKS, WHATSAPP_NUMBER } from '../../constants';

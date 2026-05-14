@@ -1,7 +1,7 @@
 import { MainLayout } from './components/layout/MainLayout';
 import { Container } from './components/layout/Container';
 import { Button } from './components/ui/Button';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
 export default function App() {
