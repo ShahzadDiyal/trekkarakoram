@@ -5,7 +5,7 @@ import { db } from '../../lib/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { 
   Compass, Heart, MessageSquare, Tent, 
-  ChevronRight, ArrowUpRight, Loader2, Award
+  ChevronRight, ArrowUpRight, Loader2, Award, Mountain
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -122,7 +122,7 @@ export const Overview = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-white mb-1">{inq.trekTitle}</h4>
-                      <p className="text-[10px] uppercase tracking-widest text-white/40">{new Date(inq.createdAt?.toDate()).toLocaleDateString()}</p>
+                      <p className="text-[10px] uppercase tracking-widest text-white/40">{inq.createdAt?.toDate ? inq.createdAt.toDate().toLocaleDateString() : 'Recently'}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-8">

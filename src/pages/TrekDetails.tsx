@@ -16,9 +16,18 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export const TrekDetails = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [isInquiring, setIsInquiring] = useState(false);
   const [inquirySent, setInquirySent] = useState(false);
+
+  const trek = treks.find(t => t.slug === slug) || treks[0];
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollY } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
 
   const handleInquiry = async () => {
     if (!user) {

@@ -76,7 +76,7 @@ export const Inquiries = () => {
                     <div className="flex items-center space-x-4 text-white/30 text-xs">
                        <span className="flex items-center">
                          <Clock size={12} className="mr-1.5" />
-                         Submitted {new Date(inq.createdAt?.toDate()).toLocaleDateString()}
+                         Submitted {inq.createdAt?.toDate ? inq.createdAt.toDate().toLocaleDateString() : 'Recently'}
                        </span>
                        <span>•</span>
                        <span>ID: {inq.id.slice(0, 8)}</span>

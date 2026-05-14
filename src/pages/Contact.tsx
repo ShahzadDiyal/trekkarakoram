@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container } from '../components/layout/Container';
 import { Button } from '../components/ui/Button';
@@ -34,7 +34,7 @@ export const Contact = () => {
     }
   }, [user]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useEffect, Suspense, lazy } from 'react';
+import { useEffect, Suspense, lazy, ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MainLayout } from './components/layout/MainLayout';
 import { useAuth } from './hooks/useAuth';
@@ -31,7 +31,7 @@ const ScrollToTop = () => {
 };
 
 // Page Transition Wrapper
-const PageTransition = ({ children }: { children: React.ReactNode }) => (
+const PageTransition = ({ children }: { children: ReactNode }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useAuth();
   if (loading) return <LoadingFallback />;
   if (!user) return <Navigate to="/login" replace />;
